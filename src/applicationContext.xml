@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd				
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd">
+   <bean id="hello" class="spring.aop.bean.Hello"></bean>
+   <bean id="hi" class="spring.aop.bean.HiSpeaker"></bean>
+   <!-- 管理通知类 -->
+   <bean id="advice" class="advice.SpeakAdvice"></bean>
+   <!-- 配置切入点 -->
+   <bean id="speakPointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+   		<property name="pattern" value=".*speak"></property>
+   </bean>
+   <!-- 顾问：通知+切入点的组合 --> 
+   <bean id="speakAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+   		<property name="advice" ref="advice"></property>
+   		<property name="pointcut" ref="speakPointcut"></property>
+   </bean>
+   <!-- 代理 -->
+   <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"></bean>
+</beans>
+
+
+
+
+
+
+
